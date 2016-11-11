@@ -1342,6 +1342,17 @@ func (t *Torrent) Stats() TorrentStats {
 	return t.stats
 }
 
+func (t *Torrent) ActivePeersStats() map[string]ConnStats {
+	if !t.haveInfo() {
+		return nil
+	}
+	activePeersStats := make(map[string]ConnStats)
+	for _, conn := range t.conns {
+		activePeersStats[string(conn.PeerID[:20])] = conn.Stats()
+	}
+	return activePeersStats
+}
+
 // Returns true if the connection is added.
 func (t *Torrent) addConnection(c *connection) bool {
 	if t.cl.closed.IsSet() {

@@ -650,6 +650,10 @@ func (c *connection) requestPendingMetadata() {
 	}
 }
 
+func (cn *connection) Stats() ConnStats {
+	return cn.stats
+}
+
 func (cn *connection) wroteMsg(msg *pp.Message) {
 	cn.stats.wroteMsg(msg)
 	cn.t.stats.wroteMsg(msg)
